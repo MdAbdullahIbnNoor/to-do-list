@@ -1,0 +1,531 @@
+% Setting up the document class and necessary packages
+\documentclass[a4paper,12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{geometry}
+\geometry{margin=1in}
+\usepackage{listings}
+\usepackage{xcolor}
+\usepackage{titlesec}
+\usepackage{parskip}
+\usepackage{enumitem}
+
+% Configuring code listing styles
+\lstset{
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    numbers=left,
+    numberstyle=\tiny,
+    keywordstyle=\color{blue},
+    stringstyle=\color{red},
+    commentstyle=\color{gray},
+    showstringspaces=false
+}
+
+% Defining language-specific settings for HTML, CSS, and JavaScript
+\lstdefinelanguage{HTML}{
+    keywords={html,head,title,meta,body,div,h1,input,button,ul,script,link},
+    sensitive=false,
+    morestring=[b]",
+    morecomment=[s]{<!--}{-->}
+}
+\lstdefinelanguage{CSS}{
+    keywords={body,div,h1,ul,li,button,input},
+    sensitive=false,
+    morestring=[b]",
+    morecomment=[s]{/*}{*/}
+}
+\lstdefinelanguage{JavaScript}{
+    keywords={const,let,function,document,getElementById,addEventListener,createElement,appendChild,classList,localStorage,setItem,getItem,JSON,stringify,parse,forEach,splice,querySelectorAll,dataset},
+    sensitive=false,
+    morestring=[b]",
+    morecomment=[s]{//}{},
+    morecomment=[m]{/*}{*/}
+}
+
+% Title formatting
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+
+% Document begins
+\begin{document}
+
+% Title page
+\title{Interactive To-Do List Application: A Teaching Guide}
+\author{}
+\date{}
+\maketitle
+
+% Introduction
+\section{Introduction}
+This guide provides a step-by-step tutorial for building an Interactive To-Do List Application using HTML, CSS, and JavaScript. Designed for students with basic HTML and CSS knowledge and no prior JavaScript experience, this project introduces JavaScript concepts from beginner to intermediate levels, including DOM manipulation, event handling, arrays, and local storage. The application allows users to add, delete, and mark tasks as completed, with tasks persisted across page reloads.
+
+\subsection{Project Goals}
+\begin{itemize}
+    \item Reinforce HTML and CSS skills through practical application.
+    \item Introduce JavaScript fundamentals: DOM manipulation, events, arrays, and local storage.
+    \item Create a functional, user-friendly to-do list application.
+    \item Provide a scalable project for further enhancements.
+\end{itemize}
+
+\subsection{Prerequisites}
+\begin{itemize}
+    \item Basic understanding of HTML (tags, attributes, structure).
+    \item Basic understanding of CSS (selectors, properties, flexbox).
+    \item A text editor (e.g., VS Code) and a web browser.
+\end{itemize}
+
+% Step 1: HTML Structure
+\section{Step 1: Setting Up the HTML Structure}
+\subsection{Objective}
+Create the foundation of the to-do list with HTML, including an input field, button, and list for tasks.
+
+\subsection{Instructions}
+\begin{itemize}
+    \item Create a file named \texttt{index.html}.
+    \item Add a heading, an input field for tasks, an "Add Task" button, and an unordered list for tasks.
+    \item Use IDs to allow JavaScript interaction.
+    \item Link a CSS file (\texttt{styles.css}) and a JavaScript file (\texttt{script.js}).
+\end{itemize}
+
+\subsection{Code}
+\lstset{language=HTML}
+\begin{lstlisting}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive To-Do List</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>To-Do List</h1>
+        <div class="input-section">
+            <input type="text" id="taskInput" placeholder="Add a new task...">
+            <button id="addTaskBtn">Add Task</button>
+        </div>
+        <ul id="taskList"></ul>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
+\end{lstlisting}
+
+\subsection{Teaching Tips}
+\begin{itemize}
+    \item Explain semantic HTML and the role of IDs for JavaScript.
+    \item Discuss the \texttt{meta} tag for responsive design.
+    \item Ensure students understand how to link CSS and JavaScript files.
+\end{itemize}
+
+% Step 2: CSS Styling
+\section{Step 2: Styling with CSS}
+\subsection{Objective}
+Style the application to be visually appealing and responsive using CSS.
+
+\subsection{Instructions}
+\begin{itemize}
+    \item Create a file named \texttt{styles.css}.
+    \item Center the content using flexbox.
+    \item Style the input, button, and task list for a clean look.
+    \item Add hover effects for interactivity.
+\end{itemize}
+
+\subsection{Code}
+\lstset{language=CSS}
+\begin{lstlisting}
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+}
+
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+}
+
+.input-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+#taskInput {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#addTaskBtn {
+    padding: 10px 20px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+#addTaskBtn:hover {
+    background-color: #218838;
+}
+
+#taskList {
+    list-style: none;
+    padding: 0;
+}
+
+#taskList li {
+    padding: 10px;
+    background: #f9f9f9;
+    margin-bottom: 5px;
+    border-radius: 4px;
+}
+\end{lstlisting}
+
+\subsection{Teaching Tips}
+\begin{itemize}
+    \item Review flexbox for layout (e.g., \texttt{input-section}).
+    \item Explain pseudo-classes like \texttt{:hover} for interactivity.
+    \item Encourage students to experiment with colors and spacing.
+\end{itemize}
+
+% Step 3: Adding Tasks with JavaScript
+\section{Step 3: Adding Tasks with JavaScript}
+\subsection{Objective}
+Enable users to add tasks to the list, introducing basic JavaScript concepts.
+
+\subsection{JavaScript Skills}
+\begin{itemize}
+    \item Selecting DOM elements (\texttt{getElementById}).
+    \item Event listeners (\texttt{addEventListener}).
+    \item Creating and appending elements (\texttt{createElement}, \texttt{appendChild}).
+    \item Basic input validation.
+\end{itemize}
+
+\subsection{Instructions}
+\begin{itemize}
+    \item Create a file named \texttt{script.js}.
+    \item Select the input, button, and task list elements.
+    \item Add a click event listener to the "Add Task" button.
+    \item Create a new list item for each task and append it to the list.
+    \item Prevent empty tasks with validation.
+\end{itemize}
+
+\subsection{Code}
+\lstset{language=JavaScript}
+\begin{lstlisting}
+// Select DOM elements
+const taskInput = document.getElementById('taskInput');
+const addTaskBtn = document.getElementById('addTaskBtn');
+const taskList = document.getElementById('taskList');
+
+// Add task function
+addTaskBtn.addEventListener('click', () => {
+    const taskText = taskInput.value.trim();
+    
+    if (taskText === '') {
+        alert('Please enter a task!');
+        return;
+    }
+    
+    // Create new list item
+    const li = document.createElement('li');
+    li.textContent = taskText;
+    
+    // Append to task list
+    taskList.appendChild(li);
+    
+    // Clear input
+    taskInput.value = '';
+});
+\end{lstlisting}
+
+\subsection{Teaching Tips}
+\begin{itemize}
+    \item Introduce the DOM and its interaction with JavaScript.
+    \item Explain events and the role of \texttt{addEventListener}.
+    \item Discuss \texttt{trim()} and input validation.
+    \item Use \texttt{console.log} for debugging if tasks don't appear.
+\end{itemize}
+
+% Step 4: Adding Delete Functionality
+\section{Step 4: Adding Delete Functionality}
+\subsection{Objective}
+Allow users to delete tasks, introducing dynamic element manipulation.
+
+\subsection{JavaScript Skills}
+\begin{itemize}
+    \item Creating buttons dynamically.
+    \item Event handling for dynamic elements.
+    \item Removing elements (\texttt{removeChild}).
+\end{itemize}
+
+\subsection{Instructions}
+\begin{itemize}
+    \item Add a "Delete" button to each task.
+    \item Attach a click event to remove the task.
+    \item Update CSS for proper layout.
+\end{itemize}
+
+\subsection{Code}
+\textbf{Update \texttt{script.js}:}
+\lstset{language=JavaScript}
+\begin{lstlisting}
+addTaskBtn.addEventListener('click', () => {
+    const taskText = taskInput.value.trim();
+    
+    if (taskText === '') {
+        alert('Please enter a task!');
+        return;
+    }
+    
+    // Create new list item
+    const li = document.createElement('li');
+    li.textContent = taskText;
+    
+    // Create delete button
+    const deleteBtn = document.createElement('button');
+    deleteBtn.textContent = 'Delete';
+    deleteBtn.style.marginLeft = '10px';
+    deleteBtn.style.backgroundColor = '#dc3545';
+    deleteBtn.style.color = 'white';
+    deleteBtn.style.border = 'none';
+    deleteBtn.style.borderRadius = '4px';
+    deleteBtn.style.padding = '5px 10px';
+    
+    // Add delete functionality
+    deleteBtn.addEventListener('click', () => {
+        taskList.removeChild(li);
+    });
+    
+ logicalStorage.setItem('tasks', JSON.stringify(tasks));
+    renderTasks();
+    taskInput.value = '';
+});
+
+// Initial render
+renderTasks();
+\end{lstlisting}
+
+\subsection{Teaching Tips}
+\begin{itemize}
+    \item Explain arrays and objects for task data.
+    \item Introduce \texttt{localStorage} and JSON serialization.
+    \item Discuss \texttt{forEach} and \texttt{splice} for array manipulation.
+    \item Highlight the role of \texttt{renderTasks} for consistent rendering.
+\end{itemize}
+
+% Step 7: Clear All Button
+\section{Step 7: Adding a Clear All Button}
+\subsection{Objective}
+Allow users to clear all tasks with a confirmation dialog.
+
+\subsection{JavaScript Skills}
+\begin{itemize}
+    \item Array clearing.
+    \item Confirmation dialogs (\texttt{confirm}).
+\end{itemize}
+
+\subsection{Instructions}
+\begin{itemize}
+    \item Add a "Clear All" button to the HTML.
+    \item Create a function to clear tasks and local storage.
+    \item Add a confirmation dialog.
+\end{itemize}
+
+\subsection{Code}
+\textbf{Update \texttt{index.html} (add to container):}
+\lstset{language=HTML}
+\begin{lstlisting}
+<button id="clearAllBtn">Clear All Tasks</button>
+\end{lstlisting}
+
+\textbf{Update \texttt{styles.css}:}
+\lstset{language=CSS}
+\begin{lstlisting}
+#clearAllBtn {
+    width: 100%;
+    padding: 10px;
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+#clearAllBtn:hover {
+    background-color: #c82333;
+}
+\end{lstlisting}
+
+\textbf{Update \texttt{script.js}:}
+\lstset{language=JavaScript}
+\begin{lstlisting}
+const clearAllBtn = document.getElementById('clearAllBtn');
+
+clearAllBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to clear all tasks?')) {
+        tasks = [];
+        localStorage.setItem('tasks', JSON.stringify(tasks));
+        renderTasks();
+    }
+});
+\end{lstlisting}
+
+\subsection{Teaching Tips}
+\begin{itemize}
+    \item Explain the \texttt{confirm} dialog for user experience.
+    \item Discuss synchronizing array and local storage updates.
+\end{itemize}
+
+% Step 8: Filter Tasks
+\section{Step 8: Filtering Tasks (Optional)}
+\subsection{Objective}
+Add filters to show all, active, or completed tasks.
+
+\subsection{JavaScript Skills}
+\begin{itemize}
+    \item Array filtering (\texttt{filter}).
+    \item Dynamic UI updates with state.
+\end{itemize}
+
+\subsection{Instructions}
+\begin{itemize}
+    \item Add filter buttons to the HTML.
+    \item Update \texttt{renderTasks} to filter tasks based on the selected option.
+    \item Style the active filter button.
+\end{itemize}
+
+\subsection{Code}
+\textbf{Update \texttt{index.html} (add to container):}
+\lstset{language=HTML}
+\begin{lstlisting}
+<div class="filter-section">
+    <button class="filterBtn active" data-filter="all">All</button>
+    <button class="filterBtn" data-filter="active">Active</button>
+    <button class="filterBtn" data-filter="completed">Completed</button>
+</div>
+\end{lstlisting}
+
+\textbf{Update \texttt{styles.css}:}
+\lstset{language=CSS}
+\begin{lstlisting}
+.filter-section {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.filterBtn {
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: #f9f9f9;
+    cursor: pointer;
+}
+
+.filterBtn.active {
+    background: #28a745;
+    color: white;
+}
+\end{lstlisting}
+
+\textbf{Update \texttt{script.js}:}
+\lstset{language=JavaScript}
+\begin{lstlisting}
+let currentFilter = 'all';
+
+// Select filter buttons
+const filterButtons = document.querySelectorAll('.filterBtn');
+
+filterButtons.forEach(button => {
+    button.addEventListener('click', () => {
+        filterButtons.forEach(btn => btn.classList.remove('active'));
+        button.classList.add('active');
+        currentFilter = button.dataset.filter;
+        renderTasks();
+    });
+});
+
+// Update renderTasks function
+function renderTasks() {
+    taskList.innerHTML = '';
+    let filteredTasks = tasks;
+    
+    if (currentFilter === 'active') {
+        filteredTasks = tasks.filter(task => !task.completed);
+    } else if (currentFilter === 'completed') {
+        filteredTasks = tasks.filter(task => task.completed);
+    }
+    
+    filteredTasks.forEach((task, index) => {
+        const li = document.createElement('li');
+        li.textContent = task.text;
+        if (task.completed) {
+            li.classList.add('completed');
+        }
+        
+        li.addEventListener('click', () => {
+            tasks[index].completed = !tasks[index].completed;
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            renderTasks();
+        });
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.style.marginLeft = '10px';
+        deleteBtn.style.backgroundColor = '#dc3545';
+        deleteBtn.style.color = 'white';
+        deleteBtn.style.border = 'none';
+        deleteBtn.style.borderRadius = '4px';
+        deleteBtn.style.padding = '5px 10px';
+        
+        deleteBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            tasks.splice(index, 1);
+            localStorage.setItem('tasks', JSON.stringify(tasks));
+            renderTasks();
+        });
+        
+        li.appendChild(deleteBtn);
+        taskList.appendChild(li);
+    });
+}
+\end{lstlisting}
+
+\subsection{Teaching Tips}
+\begin{itemize}
+    \item Introduce the \texttt{filter} method for array manipulation.
+    \item Explain \texttt{dataset} for custom data attributes.
+    \item Discuss state management with \texttt{currentFilter}.
+\end{itemize}
+
+% Conclusion
+\section{Conclusion}
+This project guides students from basic JavaScript concepts (DOM manipulation, events) to intermediate topics (arrays, local storage, filtering). Encourage students to:
+\begin{itemize}
+    \item Test edge cases (e.g., empty tasks, page reloads).
+    \item Extend the project with features like task editing or drag-and-drop.
+    \item Refer to MDN Web Docs for further learning on \texttt{localStorage}, \texttt{addEventListener}, and array methods.
+\end{itemize}
+
+\end{document}
