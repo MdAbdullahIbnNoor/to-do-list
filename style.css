@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+    background-color: #dacccc;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -9,12 +9,12 @@ body {
 }
 
 .container {
-    background: white;
+    background: rgb(255, 255, 255);
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 400px;
+    max-width: 500px;
 }
 
 h1 {
@@ -45,7 +45,8 @@ h1 {
 }
 
 #addTaskBtn:hover {
-    background-color: #218838;
+    background-color: #5922ff;
+    font-weight: bold;
 }
 
 #taskList {
@@ -66,7 +67,9 @@ h1 {
 .completed {
     text-decoration: line-through;
     color: #888;
+    font-style: italic;
 }
+
 
 #clearAllBtn {
     width: 100%;
